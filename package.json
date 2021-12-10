@@ -1,0 +1,13 @@
+{
+  "name": "sola-bible",
+  "version": "1.0.0",
+  "description": "Bible data",
+  "main": "index.js",
+  "repository": "https://github.com/sjusaitis/sola-bible.git",
+  "author": "Sam Jusaitis",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "prettier": "^2.5.1"
+  }
+}
