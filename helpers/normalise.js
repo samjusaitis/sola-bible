@@ -29,7 +29,7 @@ export function normaliseChapterRange(chapterRange, bookId) {
   const sortedRange = sortRange(chapterRange);
 
   return [
-    this.normaliseChapter(bookId, sortedRange[0]),
-    this.normaliseChapter(bookId, sortedRange[1]),
+    normaliseChapter(bookId, sortedRange[0]),
+    normaliseChapter(bookId, sortedRange[1]),
   ];
 }
