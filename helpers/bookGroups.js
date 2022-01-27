@@ -21,13 +21,13 @@ const GROUPED_BOOKS = Object.freeze([[9, 10], [11, 12], [13, 14], [46, 47], [52,
  */
 const JOINED_BOOKS = Object.freeze([[15, 16]]);
 
-function isBookJoined(bookId) {
+export function isBookJoinable(bookId) {
   return JOINED_BOOKS.flat().includes(bookId);
 }
 
-function isBookGrouped(bookId) {
+export function isBookPartOfGroup(bookId) {
   const isGroupedBook = GROUPED_BOOKS.flat().includes(bookId);
-  const isJoinedBook = isBookJoined(bookId);
+  const isJoinedBook = isBookJoinable(bookId);
   return isGroupedBook || isJoinedBook;
 }
 
@@ -38,9 +38,9 @@ function isBookGrouped(bookId) {
  * @returns {number[]}  bookIds
  */
 export function getBookGroup(bookId) {
-  if (!isBookGrouped(bookId)) return [bookId];
+  if (!isBookPartOfGroup(bookId)) return [bookId];
 
-  const isJoinedBook = isBookJoined(bookId);
+  const isJoinedBook = isBookJoinable(bookId);
   const groups = isJoinedBook ? JOINED_BOOKS : GROUPED_BOOKS;
 
   return groups.find((group) => group.includes(bookId));
@@ -54,9 +54,9 @@ export function getBookGroup(bookId) {
  * @returns {string}               bookGroupName
  */
 export function getBookGroupName(bookId, length = BibleBookNameLength.FULL) {
-  if (!isBookGrouped(bookId)) return [bookId];
+  if (!isBookPartOfGroup(bookId)) return [bookId];
 
-  const isJoinedBook = isBookJoined(bookId);
+  const isJoinedBook = isBookJoinable(bookId);
 
   const group = getBookGroup(bookId);
 
