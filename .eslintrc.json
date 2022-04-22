@@ -9,5 +9,9 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "rules": {}
+  "rules": {
+    "no-nested-ternary": "warn",
+    "no-unneeded-ternary": "warn",
+    "no-unused-vars": ["off", { "args": "after-used" }]
+  }
 }
