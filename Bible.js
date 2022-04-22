@@ -49,6 +49,7 @@ export const Bible = {
   BOOK_OT_END: 39,
   BOOK_NT_START: 40,
   BOOK_COUNT: 66,
+  CHAPTER_COUNT: 1189,
   WORD_COUNT: 789634,
 
   /**
