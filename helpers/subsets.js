@@ -16,6 +16,8 @@ function isValidRange(range) {
  * @param   {number[]}     bookRange
  * @returns {BibleSubset}  subset
  */
+
+// TODO: if still using, update for new subsets
 export function subsetFromBookRange(bookRange) {
   if (!isValidRange(bookRange)) return BibleSubset.ALL;
 
