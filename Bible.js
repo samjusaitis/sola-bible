@@ -49,6 +49,8 @@ export const Bible = {
   BOOK_OT_END: 39,
   BOOK_NT_START: 40,
   BOOK_COUNT: 66,
+  CHAPTER_COUNT: 1189,
+  WORD_COUNT: 789634,
 
   /**
    * @param   {number}           id
@@ -115,18 +117,18 @@ export const Bible = {
       bookCount: subset.bookEnd - subset.bookStart + 1,
 
       bookArray: (trimStart, trimEnd) => {
-        const { bookStart, bookEnd } = subset;
-        const start = Math.min(
+        let { bookStart, bookEnd } = subset;
+          bookStart = Math.min(
           Math.max(trimStart || bookStart, bookStart),
           bookEnd,
         );
-        const end = Math.max(Math.min(trimEnd || bookEnd, bookEnd), start);
+        bookEnd = Math.max(Math.min(trimEnd || bookEnd, bookEnd), bookStart);
 
-        const output = [];
-        for (let i = start; i <= end; i++) {
-          output.push(i);
+        const bookIdArray = [];
+        for (let bookId = bookStart; bookId <= bookEnd; bookId++) {
+          bookIdArray.push(bookId);
         }
-        return output;
+        return bookIdArray;
       },
     };
   },
