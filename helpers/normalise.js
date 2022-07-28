@@ -17,6 +17,19 @@ export function normaliseChapter(bookId, chapter) {
 }
 
 /**
+ * Ensure provided `chapter` is within the scope of the provided `bookId`.
+ *
+ * @param   {number}  bookId
+ * @param   {number}  chapter
+ * @param   {number}  verse
+ * @returns {number}  normalisedVerse
+ */
+export function normaliseVerse(bookId, chapter, verse) {
+  const maxVerses = Bible.chapter(bookId, chapter).verseCount;
+  return verse > maxVerses ? maxVerses : verse;
+}
+
+/**
  * Ensures provided `chapterRange` is within the scope of the provided `bookId`.
  *
  * @param {number[]}  chapterRange
