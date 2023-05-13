@@ -1,4 +1,5 @@
 import { Bible } from '../Bible';
+import { BibleBookNameLengthValue } from '../enums';
 import { BibleBookNameLength } from '../enums';
 
 // prettier-ignore
@@ -13,7 +14,7 @@ import { BibleBookNameLength } from '../enums';
  *        1 & 2 Peter
  *        1, 2 & 3 John
  */
-const GROUPED_BOOKS = Object.freeze([[9, 10], [11, 12], [13, 14], [46, 47], [52, 53], [54, 55], [60, 61], [62, 63, 64]]);
+const GROUPED_BOOKS = Object.freeze([[9, 10], [11, 12], [13, 14], [46, 47], [52, 53], [54, 55], [60, 61], [62, 63, 64]])
 
 /**
  *  Books that can be joined together when naming
@@ -21,11 +22,11 @@ const GROUPED_BOOKS = Object.freeze([[9, 10], [11, 12], [13, 14], [46, 47], [52,
  */
 const JOINED_BOOKS = Object.freeze([[15, 16]]);
 
-export function isBookJoinable(bookId) {
+export function isBookJoinable(bookId: number) {
   return JOINED_BOOKS.flat().includes(bookId);
 }
 
-export function isBookPartOfGroup(bookId) {
+export function isBookPartOfGroup(bookId: number) {
   const isGroupedBook = GROUPED_BOOKS.flat().includes(bookId);
   const isJoinedBook = isBookJoinable(bookId);
   return isGroupedBook || isJoinedBook;
@@ -33,11 +34,8 @@ export function isBookPartOfGroup(bookId) {
 
 /**
  * Returns an array of the bookIds in a book group.
- *
- * @param   {number}    bookId
- * @returns {number[]}  bookIds
  */
-export function getBookGroup(bookId) {
+export function getBookGroup(bookId: number): number[] | undefined {
   if (!isBookPartOfGroup(bookId)) return [bookId];
 
   const isJoinedBook = isBookJoinable(bookId);
@@ -48,23 +46,24 @@ export function getBookGroup(bookId) {
 
 /**
  * Returns the name of a book group.
- *
- * @param   {number}               bookId
- * @param   {BibleBookNameLength}  length
- * @returns {string}               bookGroupName
  */
-export function getBookGroupName(bookId, length = BibleBookNameLength.FULL) {
-  if (!isBookPartOfGroup(bookId)) return [bookId];
+export function getBookGroupName(
+  bookId: number,
+  length: BibleBookNameLengthValue = BibleBookNameLength.FULL,
+) {
+  if (!isBookPartOfGroup(bookId)) return undefined;
 
   const isJoinedBook = isBookJoinable(bookId);
 
   const group = getBookGroup(bookId);
 
+  if (!group) return undefined;
+
   if (isJoinedBook) {
-    return `${Bible.book(group[0]).name}/${Bible.book(group[1]).name}`;
+    return `${Bible.book(group[0])!.name}/${!Bible.book(group[1])!.name}`;
   }
 
   const numerals = group.length === 3 ? '1, 2 & 3' : '1 & 2';
-  const groupBookName = Bible.book(bookId).nameByLength(length).substring(2);
+  const groupBookName = Bible.book(bookId)!.nameByLength(length).substring(2);
   return `${numerals} ${groupBookName}`;
 }

@@ -23,7 +23,7 @@ import { chapterYears } from './books.chapterYears';
 import { verseCounts } from './books.verseCounts';
 
 // prettier-ignore
-export const books = Object.freeze([
+export const books = [
   {
     id:                 1,
     name:               'Genesis',
@@ -882,4 +882,4 @@ export const books = Object.freeze([
     verseCounts:        verseCounts[66],
     // verseWordCounts:    verseWordCounts[66],
   },
-])
+] as const;

@@ -4,14 +4,5 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "arrowParens": "always",
-  "jsxSingleQuote": false,
-
-  "jsdocLinesBetweenExampleTagAndCode": 1,
-  "jsdocEnsureDescriptionsAreSentences": false,
-  "jsdocIndentUnformattedExamples": false,
-  "jsdocTagsOrder": ["example", "param", "returns", "other"],
-  "jsdocUseColumns": true,
-  "jsdocGroupColumnsByTag": false,
-  "jsdocDescriptionColumnMinLength": 30,
-  "jsdocMinSpacesBetweenTypeAndName": 2
+  "jsxSingleQuote": false
 }

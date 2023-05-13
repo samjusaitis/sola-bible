@@ -1,4 +1,4 @@
-import { BibleSubset } from '../enums.js';
+import { BibleSubset } from '../enums';
 
 export const subsets = Object.freeze({
   [BibleSubset.ALL]: {
