@@ -6,6 +6,7 @@ import {
 } from './enums';
 import { books } from './lib/books';
 import { subsets } from './lib/subsets';
+import { Range } from './types';
 
 type BibleBookReturn = {
   name: string;
@@ -26,7 +27,7 @@ type BibleChapterReturn = {
 
 type BibleSubsetReturn = {
   name: string;
-  range: number[];
+  range: Range;
   bookStart: number;
   bookEnd: number;
   bookCount: number;
