@@ -1,5 +1,3 @@
-type ValueOf<T> = T[keyof T];
-
 // NOTE: values below are based on how I am storing subsets in the
 // database
 export const BibleSubset = {
@@ -21,6 +19,3 @@ export const BibleBookNameLength = {
   SHORT: 'short',
   ABBREVIATED: 'abbr',
 } as const;
-
-export type BibleSubsetValue = ValueOf<typeof BibleSubset>;
-export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;

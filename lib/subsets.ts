@@ -1,6 +1,13 @@
 import { BibleSubset } from '../enums';
+import { BibleSubsetValue, BookId } from '../types';
 
-export const subsets = Object.freeze({
+type SubsetData = {
+  name: string;
+  bookStart: BookId;
+  bookEnd: BookId;
+};
+
+export const subsets: { [key in BibleSubsetValue]: SubsetData } = {
   [BibleSubset.ALL]: {
     name: 'The Bible',
     bookStart: 1,
@@ -56,4 +63,4 @@ export const subsets = Object.freeze({
     bookStart: 45,
     bookEnd: 66,
   },
-});
+} as const;

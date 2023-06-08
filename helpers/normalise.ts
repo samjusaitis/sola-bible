@@ -1,5 +1,5 @@
 import { Bible } from '../Bible';
-import { Range } from '../types';
+import { BookId, Range } from '../types';
 
 function sortRange(range: Range) {
   return range[0] > range[1] ? [range[1], range[0]] : [range[0], range[1]];
@@ -8,7 +8,7 @@ function sortRange(range: Range) {
 /**
  * Ensure provided `chapter` is within the scope of the provided `bookId`.
  */
-export function normaliseChapter(bookId: number, chapter: number) {
+export function normaliseChapter(bookId: BookId, chapter: number) {
   const bookChapterCount = Bible.book(bookId)?.chapterCount || 0;
   return Math.min(Math.max(chapter, 1), bookChapterCount);
 }
@@ -16,7 +16,7 @@ export function normaliseChapter(bookId: number, chapter: number) {
 /**
  * Ensure provided `chapter` is within the scope of the provided `bookId`.
  */
-export function normaliseVerse(bookId: number, chapter: number, verse: number) {
+export function normaliseVerse(bookId: BookId, chapter: number, verse: number) {
   const maxVerses = Bible.chapter(bookId, chapter).verseCount;
   return verse > maxVerses ? maxVerses : verse;
 }
@@ -26,7 +26,7 @@ export function normaliseVerse(bookId: number, chapter: number, verse: number) {
  */
 export function normaliseChapterRange(
   chapterRange: Range,
-  bookId: number,
+  bookId: BookId,
 ): Range | undefined {
   if (!Array.isArray(chapterRange)) return undefined;
 

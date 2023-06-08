@@ -1,9 +1,5 @@
-import {
-  BibleSubset,
-  BibleBookNameLength,
-  BibleBookNameLengthValue,
-  BibleSubsetValue,
-} from './enums';
+import { BibleSubset, BibleBookNameLength } from './enums';
+import { BibleBookNameLengthValue, BibleSubsetValue, BookId } from './types';
 import { books } from './lib/books';
 import { subsets } from './lib/subsets';
 import { Range } from './types';
@@ -34,9 +30,13 @@ type BibleSubsetReturn = {
   bookArray: (trimStart: number, trimEnd: number) => number[];
 };
 
-function parseBookId(bookId: number | string) {
+function parseBookId(bookId: number | string): BookId {
   const bookIdNumber = Number(bookId);
-  return Math.min(Math.max(bookIdNumber, Bible.BOOK_START), Bible.BOOK_END);
+
+  return Math.min(
+    Math.max(bookIdNumber, Bible.BOOK_START),
+    Bible.BOOK_END,
+  ) as BookId;
 }
 
 export const Bible = {
@@ -48,7 +48,7 @@ export const Bible = {
   CHAPTER_COUNT: 1189,
   WORD_COUNT: 789634,
 
-  book(id: number): BibleBookReturn | undefined {
+  book(id: BookId): BibleBookReturn | undefined {
     const bookId = parseBookId(id);
 
     if (isNaN(bookId) || bookId < 1 || bookId > books.length) return undefined;
@@ -78,7 +78,7 @@ export const Bible = {
     };
   },
 
-  chapter(bookId: number, chapter: number): BibleChapterReturn {
+  chapter(bookId: BookId, chapter: number): BibleChapterReturn {
     const book = books[bookId - 1];
     const chapterIndex = chapter - 1;
 
@@ -101,16 +101,23 @@ export const Bible = {
 
       bookArray: (trimStart, trimEnd) => {
         let { bookStart, bookEnd } = subset;
+
         bookStart = Math.min(
           Math.max(trimStart || bookStart, bookStart),
           bookEnd,
-        );
-        bookEnd = Math.max(Math.min(trimEnd || bookEnd, bookEnd), bookStart);
+        ) as BookId;
 
-        const bookIdArray = [];
+        bookEnd = Math.max(
+          Math.min(trimEnd || bookEnd, bookEnd),
+          bookStart,
+        ) as BookId;
+
+        const bookIdArray: BookId[] = [];
+
         for (let bookId = bookStart; bookId <= bookEnd; bookId++) {
           bookIdArray.push(bookId);
         }
+
         return bookIdArray;
       },
     };

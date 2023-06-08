@@ -1,8 +1,9 @@
 import { Bible } from '../Bible';
-import { BibleBookNameLengthValue } from '../enums';
 import { BibleBookNameLength } from '../enums';
+import { BibleBookNameLengthValue, BookId } from '../types';
 
-// prettier-ignore
+type BookIdGroup = readonly BookId[];
+
 /**
  *  Books that can be grouped together when naming
  *  i.e.  1 & 2 Samuel
@@ -14,19 +15,28 @@ import { BibleBookNameLength } from '../enums';
  *        1 & 2 Peter
  *        1, 2 & 3 John
  */
-const GROUPED_BOOKS = Object.freeze([[9, 10], [11, 12], [13, 14], [46, 47], [52, 53], [54, 55], [60, 61], [62, 63, 64]])
+const GROUPED_BOOKS: readonly BookIdGroup[] = [
+  [9, 10],
+  [11, 12],
+  [13, 14],
+  [46, 47],
+  [52, 53],
+  [54, 55],
+  [60, 61],
+  [62, 63, 64],
+] as const;
 
 /**
  *  Books that can be joined together when naming
  *  i.e.  Ezra / Nehemiah
  */
-const JOINED_BOOKS = Object.freeze([[15, 16]]);
+const JOINED_BOOKS: readonly BookIdGroup[] = [[15, 16]] as const;
 
-export function isBookJoinable(bookId: number) {
+export function isBookJoinable(bookId: BookId) {
   return JOINED_BOOKS.flat().includes(bookId);
 }
 
-export function isBookPartOfGroup(bookId: number) {
+export function isBookPartOfGroup(bookId: BookId) {
   const isGroupedBook = GROUPED_BOOKS.flat().includes(bookId);
   const isJoinedBook = isBookJoinable(bookId);
   return isGroupedBook || isJoinedBook;
@@ -35,7 +45,7 @@ export function isBookPartOfGroup(bookId: number) {
 /**
  * Returns an array of the bookIds in a book group.
  */
-export function getBookGroup(bookId: number): number[] | undefined {
+export function getBookGroup(bookId: BookId): BookIdGroup | undefined {
   if (!isBookPartOfGroup(bookId)) return [bookId];
 
   const isJoinedBook = isBookJoinable(bookId);
@@ -48,7 +58,7 @@ export function getBookGroup(bookId: number): number[] | undefined {
  * Returns the name of a book group.
  */
 export function getBookGroupName(
-  bookId: number,
+  bookId: BookId,
   length: BibleBookNameLengthValue = BibleBookNameLength.FULL,
 ) {
   if (!isBookPartOfGroup(bookId)) return undefined;

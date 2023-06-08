@@ -1,9 +1,10 @@
 import { books } from '../lib/books';
+import { BookId } from '../types';
 
 /**
  * Returns the word count for the provided `bookIdStart` and `bookIdEnd`.
  */
-export function bookRangeWordCount(bookIdStart: number, bookIdEnd: number) {
+export function bookRangeWordCount(bookIdStart: BookId, bookIdEnd: BookId) {
   return books
     .slice(bookIdStart - 1, bookIdEnd)
     .map((book) => book.wordCount)
@@ -15,7 +16,7 @@ export function bookRangeWordCount(bookIdStart: number, bookIdEnd: number) {
  * within the provided `bookId`.
  */
 export function chapterRangeWordCount(
-  bookId: number,
+  bookId: BookId,
   startChapter = 1,
   endChapter: number,
 ): number {

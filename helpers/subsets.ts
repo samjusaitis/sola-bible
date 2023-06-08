@@ -1,6 +1,6 @@
 import { Bible } from '../Bible';
-import { BibleSubset, BibleSubsetValue } from '../enums';
-import { Range } from '../types';
+import { BibleSubset } from '../enums';
+import { BibleSubsetValue, Range } from '../types';
 
 function isValidRange(range: Range) {
   return (

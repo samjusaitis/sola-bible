@@ -1,4 +1,5 @@
 export * from './enums';
+export * from './types';
 
 export * from './helpers/bookGroups';
 export * from './helpers/eastons';
