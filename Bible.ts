@@ -31,7 +31,7 @@ type BibleSubsetReturn = {
   bookStart: number;
   bookEnd: number;
   bookCount: number;
-  bookArray: (trimStart?: number, trimEnd?: number) => number[];
+  bookArray: (trimStart?: BookId, trimEnd?: BookId) => BookId[];
 };
 
 function parseBookId(bookId: number | string): BookId {
