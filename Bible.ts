@@ -1,8 +1,12 @@
 import { BibleSubset, BibleBookNameLength } from './enums';
-import { BibleBookNameLengthValue, BibleSubsetValue, BookId } from './types';
+import {
+  BibleBookNameLengthValue,
+  BibleSubsetValue,
+  BookId,
+  BookRange,
+} from './types';
 import { books } from './lib/books';
 import { subsets } from './lib/subsets';
-import { Range } from './types';
 
 type BibleBookReturn = {
   name: string;
@@ -23,7 +27,7 @@ type BibleChapterReturn = {
 
 type BibleSubsetReturn = {
   name: string;
-  range: Range;
+  range: BookRange;
   bookStart: number;
   bookEnd: number;
   bookCount: number;

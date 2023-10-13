@@ -1,6 +1,6 @@
 import { Bible } from '../Bible';
 import { BibleSubset } from '../enums';
-import { BibleSubsetValue, Range } from '../types';
+import { BibleSubsetValue, BookRange, Range } from '../types';
 
 function isValidRange(range: Range) {
   return (
@@ -16,7 +16,7 @@ function isValidRange(range: Range) {
  *
  * TODO: if still using, update for new subsets
  */
-export function subsetFromBookRange(bookRange: Range): BibleSubsetValue {
+export function subsetFromBookRange(bookRange: BookRange): BibleSubsetValue {
   if (!isValidRange(bookRange)) return BibleSubset.ALL;
 
   const [bookStart, bookEnd] = bookRange;

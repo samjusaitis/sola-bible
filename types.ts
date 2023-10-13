@@ -8,4 +8,5 @@ export type BookId = typeof books[number]['id'];
 export type BibleSubsetValue = ValueOf<typeof BibleSubset>;
 export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;
 
+export type BookRange = [bookStart: BookId, bookEnd: BookId];
 export type Range = [start: number, end: number];
