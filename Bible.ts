@@ -28,8 +28,8 @@ type BibleChapterReturn = {
 type BibleSubsetReturn = {
   name: string;
   range: BookRange;
-  bookStart: number;
-  bookEnd: number;
+  bookStart: BookId;
+  bookEnd: BookId;
   bookCount: number;
   bookArray: (trimStart?: BookId, trimEnd?: BookId) => BookId[];
 };
