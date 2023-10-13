@@ -27,7 +27,7 @@ type BibleSubsetReturn = {
   bookStart: number;
   bookEnd: number;
   bookCount: number;
-  bookArray: (trimStart: number, trimEnd: number) => number[];
+  bookArray: (trimStart?: number, trimEnd?: number) => number[];
 };
 
 function parseBookId(bookId: number | string): BookId {
