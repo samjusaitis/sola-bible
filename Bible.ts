@@ -52,10 +52,12 @@ export const Bible = {
   CHAPTER_COUNT: 1189,
   WORD_COUNT: 789634,
 
-  book(id: BookId): BibleBookReturn | undefined {
+  book(id: BookId): BibleBookReturn {
     const bookId = parseBookId(id);
 
-    if (isNaN(bookId) || bookId < 1 || bookId > books.length) return undefined;
+    if (isNaN(bookId) || bookId < 1 || bookId > books.length) {
+      throw new Error('Invalid bookId supplied Bible.book()');
+    }
 
     const book = books[bookId - 1];
 
@@ -125,5 +127,13 @@ export const Bible = {
         return bookIdArray;
       },
     };
+  },
+
+  isValidBook(value: number): value is BookId {
+    return (
+      typeof value === 'number' &&
+      value >= Bible.BOOK_START &&
+      value <= Bible.BOOK_END
+    );
   },
 };
