@@ -18,9 +18,23 @@
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
+import { BookId } from '../types';
 import { chapterWordCounts } from './books.chapterWordCounts';
 import { chapterYears } from './books.chapterYears';
 import { verseCounts } from './books.verseCounts';
+
+export type BookData = {
+  id: BookId;
+  name: string;
+  nameShort: string;
+  nameAbbr: string;
+  identifier: string;
+  chapterCount: number;
+  wordCount: number;
+  chapterWordCounts: readonly number[];
+  chapterYears: readonly number[];
+  verseCounts: readonly number[];
+};
 
 // prettier-ignore
 export const books = [

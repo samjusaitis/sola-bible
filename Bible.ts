@@ -5,7 +5,7 @@ import {
   BookId,
   BookRange,
 } from './types';
-import { books } from './lib/books';
+import { BookData, books } from './lib/books';
 import { subsets } from './lib/subsets';
 
 type BibleBookReturn = {
@@ -55,11 +55,11 @@ export const Bible = {
   book(id: BookId): BibleBookReturn {
     const bookId = parseBookId(id);
 
-    if (isNaN(bookId) || bookId < 1 || bookId > books.length) {
-      throw new Error('Invalid bookId supplied Bible.book()');
+    if (!Bible.isValidBook(id)) {
+      throw new Error('Invalid bookId supplied to Bible.book().');
     }
 
-    const book = books[bookId - 1];
+    const book = books[bookId - 1] as BookData;
 
     return {
       name: book.name,
@@ -85,14 +85,28 @@ export const Bible = {
   },
 
   chapter(bookId: BookId, chapter: number): BibleChapterReturn {
-    const book = books[bookId - 1];
+    if (!Bible.isValidBook(bookId)) {
+      throw new Error('Invalid bookId supplied to Bible.book().');
+    }
+
+    const book = books[bookId - 1] as BookData;
     const chapterIndex = chapter - 1;
 
-    return {
-      wordCount: book.chapterWordCounts[chapterIndex],
-      verseCount: book.verseCounts[chapterIndex],
-      year: book.chapterYears[chapterIndex],
-    };
+    const wordCount = book.chapterWordCounts[chapterIndex];
+    const verseCount = book.verseCounts[chapterIndex];
+    const year = book.chapterYears[chapterIndex];
+
+    if (
+      typeof wordCount !== 'number' ||
+      typeof verseCount !== 'number' ||
+      typeof year !== 'number'
+    ) {
+      throw new Error(
+        'Invalid chapter for bookId supplied to Bible.chapter().',
+      );
+    }
+
+    return { wordCount, verseCount, year };
   },
 
   subset(key: BibleSubsetValue): BibleSubsetReturn {

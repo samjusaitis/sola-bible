@@ -69,8 +69,8 @@ export function getBookGroupName(
 
   if (!group) return undefined;
 
-  if (isJoinedBook) {
-    return `${Bible.book(group[0])!.name}/${!Bible.book(group[1])!.name}`;
+  if (isJoinedBook && group[0] && group[1]) {
+    return `${Bible.book(group[0]).name}/${!Bible.book(group[1]).name}`;
   }
 
   const numerals = group.length === 3 ? '1, 2 & 3' : '1 & 2';

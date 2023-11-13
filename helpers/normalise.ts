@@ -1,7 +1,7 @@
 import { Bible } from '../Bible';
 import { BookId, Range } from '../types';
 
-function sortRange(range: Range) {
+function sortRange(range: Range): Range {
   return range[0] > range[1] ? [range[1], range[0]] : [range[0], range[1]];
 }
 
