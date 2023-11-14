@@ -1,14 +1,7 @@
 import { Bible } from '../Bible';
 import { BibleSubset } from '../enums';
-import { BibleSubsetValue, BookRange, Range } from '../types';
-
-function isValidRange(range: Range) {
-  return (
-    Array.isArray(range) &&
-    typeof range[0] === 'number' &&
-    typeof range[1] === 'number'
-  );
-}
+import { BibleSubsetValue, BookRange } from '../types';
+import { isValidRange } from './internal';
 
 /**
  * Returns the relevant smallest BibleSubset that includes the provided
@@ -16,7 +9,7 @@ function isValidRange(range: Range) {
  *
  * TODO: if still using, update for new subsets
  */
-export function subsetFromBookRange(bookRange: BookRange): BibleSubsetValue {
+export function getSubsetFromBookRange(bookRange: BookRange): BibleSubsetValue {
   if (!isValidRange(bookRange)) return BibleSubset.ALL;
 
   const [bookStart, bookEnd] = bookRange;

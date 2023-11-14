@@ -1,65 +1,29 @@
 import { BibleSubset, BibleBookNameLength } from './enums';
 import {
-  BibleBookNameLengthValue,
+  BibleBookReturn,
+  BibleChapterReturn,
+  BibleSubsetReturn,
   BibleSubsetValue,
   BookId,
-  BookRange,
 } from './types';
-import { BookData, books } from './lib/books';
-import { subsets } from './lib/subsets';
-
-type BibleBookReturn = {
-  name: string;
-  nameShort: string;
-  nameAbbr: string;
-  identifier: string;
-  chapterCount: number;
-  wordCount: number;
-  testament: string;
-  nameByLength: (length: BibleBookNameLengthValue) => string;
-};
-
-type BibleChapterReturn = {
-  wordCount: number;
-  verseCount: number;
-  year: number;
-};
-
-type BibleSubsetReturn = {
-  name: string;
-  range: BookRange;
-  bookStart: BookId;
-  bookEnd: BookId;
-  bookCount: number;
-  bookArray: (trimStart?: BookId, trimEnd?: BookId) => BookId[];
-};
-
-function parseBookId(bookId: number | string): BookId {
-  const bookIdNumber = Number(bookId);
-
-  return Math.min(
-    Math.max(bookIdNumber, Bible.BOOK_START),
-    Bible.BOOK_END,
-  ) as BookId;
-}
+import { books } from './data/books';
+import { subsets } from './data/subsets';
 
 export const Bible = {
-  BOOK_START: 1,
-  BOOK_END: 66,
-  BOOK_OT_END: 39,
-  BOOK_NT_START: 40,
-  BOOK_COUNT: 66,
-  CHAPTER_COUNT: 1189,
-  WORD_COUNT: 789634,
+  BOOK_START: 1 as const,
+  BOOK_END: 66 as const,
+  BOOK_OT_END: 39 as const,
+  BOOK_NT_START: 40 as const,
+  BOOK_COUNT: 66 as const,
+  CHAPTER_COUNT: 1189 as const,
+  WORD_COUNT: 789634 as const,
 
-  book(id: BookId): BibleBookReturn {
-    const bookId = parseBookId(id);
-
-    if (!Bible.isValidBook(id)) {
+  book(bookId: BookId): BibleBookReturn {
+    if (!Bible.isValidBook(bookId)) {
       throw new Error('Invalid bookId supplied to Bible.book().');
     }
 
-    const book = books[bookId - 1] as BookData;
+    const book = books[bookId];
 
     return {
       name: book.name,
@@ -89,7 +53,7 @@ export const Bible = {
       throw new Error('Invalid bookId supplied to Bible.book().');
     }
 
-    const book = books[bookId - 1] as BookData;
+    const book = books[bookId];
     const chapterIndex = chapter - 1;
 
     const wordCount = book.chapterWordCounts[chapterIndex];
@@ -144,11 +108,11 @@ export const Bible = {
     };
   },
 
-  isValidBook(value: number): value is BookId {
+  isValidBook(bookId: number): bookId is BookId {
     return (
-      typeof value === 'number' &&
-      value >= Bible.BOOK_START &&
-      value <= Bible.BOOK_END
+      typeof bookId === 'number' &&
+      bookId >= Bible.BOOK_START &&
+      bookId <= Bible.BOOK_END
     );
   },
 };

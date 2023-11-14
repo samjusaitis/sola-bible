@@ -7,7 +7,7 @@ type SubsetData = {
   bookEnd: BookId;
 };
 
-export const subsets: { [key in BibleSubsetValue]: SubsetData } = {
+export const subsets = Object.freeze<Record<BibleSubsetValue, SubsetData>>({
   [BibleSubset.ALL]: {
     name: 'The Bible',
     bookStart: 1,
@@ -63,4 +63,4 @@ export const subsets: { [key in BibleSubsetValue]: SubsetData } = {
     bookStart: 45,
     bookEnd: 66,
   },
-} as const;
+});

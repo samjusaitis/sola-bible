@@ -1,6 +1,8 @@
-// NOTE: values below are based on how I am storing subsets in the
-// database
-export const BibleSubset = {
+/**
+ * NOTE: BibleSubset values are based on how I am storing subsets in the
+ * database.
+ */
+export const BibleSubset = Object.freeze({
   ALL: 'ALL',
   OT: 'OT',
   NT: 'NT',
@@ -12,10 +14,10 @@ export const BibleSubset = {
   GOSPELS: 'GOSPELS',
   GOSPELS_ACTS: 'GOSPELS_ACTS',
   LETTERS: 'LETTERS',
-} as const;
+});
 
-export const BibleBookNameLength = {
+export const BibleBookNameLength = Object.freeze({
   FULL: 'full',
   SHORT: 'short',
   ABBREVIATED: 'abbr',
-} as const;
+});
