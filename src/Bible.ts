@@ -6,8 +6,8 @@ import {
    BibleSubsetValue,
    BookId,
 } from './types';
-import { books } from './data/books';
-import { subsets } from './data/subsets';
+import { books } from '../data/books';
+import { subsets } from '../data/subsets';
 
 export const Bible = {
    BOOK_START: 1 as const,

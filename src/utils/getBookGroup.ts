@@ -1,6 +1,6 @@
 import { isBookPartOfGroup } from './isBookPartOfGroup';
 import { isBookJoinable } from './isBookJoinable';
-import { groupedBooks, joinedBooks } from '../data/bookGroups';
+import { groupedBooks, joinedBooks } from '../../data/bookGroups';
 import { BookGroup, BookId } from '../types';
 
 /**

@@ -1,4 +1,4 @@
-import { BookGroup } from '../../types';
+import { BookGroup } from '../../src/types';
 
 /**
  *  Books that can be grouped together when naming

@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 import { chapterCounts } from './chapterCounts';
 import { chapterWordCounts } from './chapterWordCounts';
 import { chapterYears } from './chapterYears';

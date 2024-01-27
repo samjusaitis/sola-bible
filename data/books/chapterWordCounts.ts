@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 /**
  * Chapter word counts from the KJV translation.

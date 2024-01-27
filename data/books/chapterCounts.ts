@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 export const chapterCounts = Object.freeze<Record<BookId, number>>({
    1: 50,

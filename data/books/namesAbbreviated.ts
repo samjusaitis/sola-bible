@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 /**
  * Used by getEastonsArray() to match against Easton's references.

@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 export const names = Object.freeze<Record<BookId, string>>({
    1: 'Genesis',

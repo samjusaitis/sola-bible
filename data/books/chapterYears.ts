@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 /**
  * Data taken from from biblehub.com/timeline

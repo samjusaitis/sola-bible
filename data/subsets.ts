@@ -1,5 +1,5 @@
-import { BibleSubset } from '../enums';
-import { BibleSubsetValue, BookId } from '../types';
+import { BibleSubset } from '../src/enums';
+import { BibleSubsetValue, BookId } from '../src/types';
 
 type SubsetData = {
    name: string;

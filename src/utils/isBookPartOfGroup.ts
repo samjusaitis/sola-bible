@@ -1,4 +1,4 @@
-import { groupedBooks } from '../data/bookGroups';
+import { groupedBooks } from '../../data/bookGroups';
 import { BookId } from '../types';
 import { isBookJoinable } from './isBookJoinable';
 

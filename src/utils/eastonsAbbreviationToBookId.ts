@@ -1,4 +1,4 @@
-import { namesAbbreviated } from '../data/books/namesAbbreviated';
+import { namesAbbreviated } from '../../data/books/namesAbbreviated';
 import { BookId } from '../types';
 
 /**

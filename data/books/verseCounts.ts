@@ -1,4 +1,4 @@
-import { BookId } from '../../types';
+import { BookId } from '../../src/types';
 
 // prettier-ignore
 export const verseCounts = Object.freeze<Record<BookId, number[]>>({
