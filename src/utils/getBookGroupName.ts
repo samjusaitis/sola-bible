@@ -9,14 +9,14 @@ import { Bible } from '../Bible';
  * Returns the name of a book group.
  */
 export function getBookGroupName(
-   bookId: BookId,
+   book: BookId,
    length: BibleBookNameLengthValue = BibleBookNameLength.FULL,
 ) {
-   if (!isBookPartOfGroup(bookId)) return undefined;
+   if (!isBookPartOfGroup(book)) return undefined;
 
-   const isJoinedBook = isBookJoinable(bookId);
+   const isJoinedBook = isBookJoinable(book);
 
-   const group = getBookGroup(bookId);
+   const group = getBookGroup(book);
 
    if (!group) return undefined;
 
@@ -25,6 +25,6 @@ export function getBookGroupName(
    }
 
    const numerals = group.length === 3 ? '1, 2 & 3' : '1 & 2';
-   const groupBookName = Bible.book(bookId)!.nameByLength(length).substring(2);
+   const groupBookName = Bible.book(book)!.nameByLength(length).substring(2);
    return `${numerals} ${groupBookName}`;
 }

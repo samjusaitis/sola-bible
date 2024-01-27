@@ -1,3 +1,4 @@
+import { getChapterRangeWordCount } from './utils/getChapterRangeWordCount';
 import { Bible } from './Bible';
 import { BookId } from './types';
 
@@ -24,11 +25,7 @@ export class Passage {
       start?: StartChapterAndVerse,
       end?: EndChapterAndVerse,
    ) {
-      if (
-         typeof book !== 'number' ||
-         book < Bible.BOOK_START ||
-         book > Bible.BOOK_END
-      ) {
+      if (!Bible.isValidBook(book)) {
          throw new Error('Invalid `book` arg provided to Passage constructor.');
       }
 
@@ -247,13 +244,11 @@ export class Passage {
          );
       }
 
-      let count = 0;
-
-      for (let ch = this.startChapter; ch <= this.endChapter; ch++) {
-         count += Bible.chapter(this.book, ch).wordCount;
-      }
-
-      return count;
+      return getChapterRangeWordCount(
+         this.book,
+         this.startChapter,
+         this.endChapter,
+      );
    }
 
    /**

@@ -18,47 +18,47 @@ export const Bible = {
    CHAPTER_COUNT: 1189 as const,
    WORD_COUNT: 789634 as const,
 
-   book(bookId: BookId): BibleBookReturn {
-      if (!Bible.isValidBook(bookId)) {
+   book(book: BookId): BibleBookReturn {
+      if (!Bible.isValidBook(book)) {
          throw new Error('Invalid book identifier supplied to Bible.book().');
       }
 
-      const book = books[bookId];
+      const bookData = books[book];
 
       return {
-         name: book.name,
-         nameShort: book.nameShort,
-         nameAbbr: book.nameAbbr,
-         identifier: book.identifier,
-         chapterCount: book.chapterCount,
-         wordCount: book.wordCount,
-         testament: bookId <= this.BOOK_OT_END ? 'OT' : 'NT',
+         name: bookData.name,
+         nameShort: bookData.nameShort,
+         nameAbbr: bookData.nameAbbr,
+         identifier: bookData.identifier,
+         chapterCount: bookData.chapterCount,
+         wordCount: bookData.wordCount,
+         testament: book <= this.BOOK_OT_END ? 'OT' : 'NT',
 
          nameByLength: (length) => {
             switch (length) {
                case BibleBookNameLength.SHORT:
-                  return book.nameShort;
+                  return bookData.nameShort;
                case BibleBookNameLength.ABBREVIATED:
-                  return book.nameAbbr;
+                  return bookData.nameAbbr;
                case BibleBookNameLength.FULL:
                default:
-                  return book.name;
+                  return bookData.name;
             }
          },
       };
    },
 
-   chapter(bookId: BookId, chapter: number): BibleChapterReturn {
-      if (!Bible.isValidBook(bookId)) {
-         throw new Error('Invalid bookId supplied to Bible.book().');
+   chapter(book: BookId, chapter: number): BibleChapterReturn {
+      if (!Bible.isValidBook(book)) {
+         throw new Error('Invalid book identifier supplied to Bible.book().');
       }
 
-      const book = books[bookId];
+      const bookData = books[book];
       const chapterIndex = chapter - 1;
 
-      const wordCount = book.chapterWordCounts[chapterIndex];
-      const verseCount = book.verseCounts[chapterIndex];
-      const year = book.chapterYears[chapterIndex];
+      const wordCount = bookData.chapterWordCounts[chapterIndex];
+      const verseCount = bookData.verseCounts[chapterIndex];
+      const year = bookData.chapterYears[chapterIndex];
 
       if (
          typeof wordCount !== 'number' ||
@@ -66,7 +66,7 @@ export const Bible = {
          typeof year !== 'number'
       ) {
          throw new Error(
-            'Invalid chapter for bookId supplied to Bible.chapter().',
+            'Invalid chapter for book supplied to Bible.chapter().',
          );
       }
 
@@ -97,22 +97,22 @@ export const Bible = {
                bookStart,
             ) as BookId;
 
-            const bookIdArray: BookId[] = [];
+            const bookArray: BookId[] = [];
 
-            for (let bookId = bookStart; bookId <= bookEnd; bookId++) {
-               bookIdArray.push(bookId);
+            for (let book = bookStart; book <= bookEnd; book++) {
+               bookArray.push(book);
             }
 
-            return bookIdArray;
+            return bookArray;
          },
       };
    },
 
-   isValidBook(bookId: number): bookId is BookId {
+   isValidBook(book: number): book is BookId {
       return (
-         typeof bookId === 'number' &&
-         bookId >= Bible.BOOK_START &&
-         bookId <= Bible.BOOK_END
+         typeof book === 'number' &&
+         book >= Bible.BOOK_START &&
+         book <= Bible.BOOK_END
       );
    },
 };

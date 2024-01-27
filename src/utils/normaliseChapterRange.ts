@@ -3,11 +3,11 @@ import { BookId, Range } from '../types';
 import { Passage } from '../Passage';
 
 /**
- * Ensures provided `chapterRange` is within the scope of the provided `bookId`.
+ * Ensures provided `chapterRange` is within the scope of the provided `book`.
  */
 export function normaliseChapterRange(
    chapterRange: Range,
-   bookId: BookId,
+   book: BookId,
 ): Range {
    if (!Array.isArray(chapterRange)) {
       throw new Error(
@@ -18,7 +18,7 @@ export function normaliseChapterRange(
    const sortedRange = sortRange(chapterRange);
 
    return [
-      Passage.normaliseChapter(bookId, sortedRange[0]),
-      Passage.normaliseChapter(bookId, sortedRange[1]),
+      Passage.normaliseChapter(book, sortedRange[0]),
+      Passage.normaliseChapter(book, sortedRange[1]),
    ];
 }

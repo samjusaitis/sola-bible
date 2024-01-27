@@ -3,15 +3,15 @@ import { Bible } from '../Bible';
 
 /**
  * Returns the word count of the chapters between the provided
- * `chapterStart` and `chapterEnd`, in the provided `bookId`.
+ * `chapterStart` and `chapterEnd`, in the provided `book`.
  */
 export function getChapterRangeWordCount(
-   bookId: BookId,
+   book: BookId,
    chapterStart: number,
    chapterEnd: number,
 ): number {
    if (
-      !Bible.isValidBook(bookId) ||
+      !Bible.isValidBook(book) ||
       typeof chapterStart !== 'number' ||
       typeof chapterEnd !== 'number' ||
       chapterStart > chapterEnd
@@ -22,7 +22,7 @@ export function getChapterRangeWordCount(
    let count = 0;
 
    for (let chapter = chapterStart; chapter <= chapterEnd; chapter++) {
-      count += Bible.chapter(bookId, chapter).wordCount;
+      count += Bible.chapter(book, chapter).wordCount;
    }
 
    return count;

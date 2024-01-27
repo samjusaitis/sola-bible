@@ -12,8 +12,8 @@ export function getBookRangeWordCount(start: BookId, end: BookId) {
 
    let count = 0;
 
-   for (let bookId = start; bookId <= end; bookId++) {
-      count += Bible.book(bookId).wordCount;
+   for (let book = start; book <= end; book++) {
+      count += Bible.book(book).wordCount;
    }
 
    return count;

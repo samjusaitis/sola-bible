@@ -12,8 +12,8 @@ export function getBookRangeChapterCount(start: BookId, end: BookId): number {
 
    let count = 0;
 
-   for (let bookId = start; bookId <= end; bookId++) {
-      count += Bible.book(bookId).chapterCount;
+   for (let book = start; book <= end; book++) {
+      count += Bible.book(book).chapterCount;
    }
 
    return count;
