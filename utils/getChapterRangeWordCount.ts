@@ -6,24 +6,24 @@ import { Bible } from '../Bible';
  * `chapterStart` and `chapterEnd`, in the provided `bookId`.
  */
 export function getChapterRangeWordCount(
-  bookId: BookId,
-  chapterStart: number,
-  chapterEnd: number,
+   bookId: BookId,
+   chapterStart: number,
+   chapterEnd: number,
 ): number {
-  if (
-    !Bible.isValidBook(bookId) ||
-    typeof chapterStart !== 'number' ||
-    typeof chapterEnd !== 'number' ||
-    chapterStart > chapterEnd
-  ) {
-    return 0;
-  }
+   if (
+      !Bible.isValidBook(bookId) ||
+      typeof chapterStart !== 'number' ||
+      typeof chapterEnd !== 'number' ||
+      chapterStart > chapterEnd
+   ) {
+      return 0;
+   }
 
-  let count = 0;
+   let count = 0;
 
-  for (let chapter = chapterStart; chapter <= chapterEnd; chapter++) {
-    count += Bible.chapter(bookId, chapter).wordCount;
-  }
+   for (let chapter = chapterStart; chapter <= chapterEnd; chapter++) {
+      count += Bible.chapter(bookId, chapter).wordCount;
+   }
 
-  return count;
+   return count;
 }

@@ -6,15 +6,15 @@ import { BookId } from '../types';
  * `start` and `end` book IDs.
  */
 export function getBookRangeWordCount(start: BookId, end: BookId) {
-  if (!Bible.isValidBook(start) || !Bible.isValidBook(end) || start > end) {
-    return 0;
-  }
+   if (!Bible.isValidBook(start) || !Bible.isValidBook(end) || start > end) {
+      return 0;
+   }
 
-  let count = 0;
+   let count = 0;
 
-  for (let bookId = start; bookId <= end; bookId++) {
-    count += Bible.book(bookId).wordCount;
-  }
+   for (let bookId = start; bookId <= end; bookId++) {
+      count += Bible.book(bookId).wordCount;
+   }
 
-  return count;
+   return count;
 }

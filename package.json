@@ -1,19 +1,19 @@
 {
-  "name": "sola-bible",
-  "version": "1.1.0",
-  "description": "Bible data",
-  "main": "index.ts",
-  "repository": "https://github.com/sjusaitis/sola-bible.git",
-  "author": "Sam Jusaitis",
-  "license": "MIT",
-  "scripts": {
-    "lint": "npx eslint --cache --ext .js,.ts,.jsx,.tsx ./ && npx tsc --noemit"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
-    "eslint": "^8.4.1",
-    "prettier": "^3.1.0",
-    "typescript": "^5.2.2"
-  }
+   "name": "sola-bible",
+   "version": "1.1.0",
+   "description": "Bible data",
+   "main": "index.ts",
+   "repository": "https://github.com/sjusaitis/sola-bible.git",
+   "author": "Sam Jusaitis",
+   "license": "MIT",
+   "scripts": {
+      "lint": "npx eslint --cache --ext .js,.ts,.jsx,.tsx ./ && npx tsc --noemit"
+   },
+   "devDependencies": {
+      "@typescript-eslint/eslint-plugin": "^6.11.0",
+      "@typescript-eslint/parser": "^6.11.0",
+      "eslint": "^8.4.1",
+      "prettier": "^3.1.0",
+      "typescript": "^5.2.2"
+   }
 }
