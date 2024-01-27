@@ -7,7 +7,8 @@
    "author": "Sam Jusaitis",
    "license": "MIT",
    "scripts": {
-      "lint": "npx eslint --cache --ext .js,.ts,.jsx,.tsx ./ && npx tsc --noemit"
+      "lint": "npx eslint --cache --ext .js,.ts,.jsx,.tsx ./ && npx tsc --noemit",
+      "release": "yarn lint && yarn version --minor --no-git-tag-version"
    },
    "devDependencies": {
       "@typescript-eslint/eslint-plugin": "^6.11.0",
