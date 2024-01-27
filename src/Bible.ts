@@ -20,7 +20,7 @@ export const Bible = {
 
    book(bookId: BookId): BibleBookReturn {
       if (!Bible.isValidBook(bookId)) {
-         throw new Error('Invalid bookId supplied to Bible.book().');
+         throw new Error('Invalid book identifier supplied to Bible.book().');
       }
 
       const book = books[bookId];

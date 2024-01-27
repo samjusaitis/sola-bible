@@ -1,5 +1,3 @@
-import { normaliseChapter } from './utils/normaliseChapter';
-import { normaliseVerse } from './utils/normaliseVerse';
 import { Bible } from './Bible';
 import { BookId } from './types';
 
@@ -7,37 +5,16 @@ type StartChapterAndVerse = [startChapter: number, startVerse?: number];
 type EndChapterAndVerse = [endChapter: number, endVerse?: number];
 
 /**
- * PLAN: create this new `Passage` class (initially called
- * `PassageClass` to not conflict with the `Passage` type). This Passage
- * class will accept `book` and `chapterRange` (required) and optionally
- * a `verseRange`.
- *
- * It will include all the helper classes from Reading / VerseReading
- * (i.e. output range strings, etc.).
- *
- * It won't include any Reading specific logic (i.e. progressKeys or
- * anything related to Tracks or Plans).
- *
- * Reading and VerseReading should be able to be deprecated, and should
- * just be able to have ChapterPlanReading, WeeklySetPlanReading, etc.
- * These will extend the base Passage class.
- *
- * But a Passage will be able to be used in its own regard anytime the
- * UI has a book and a chapter range that it can just pass to the
- * constructor, and statically output a range string, etc.
- *
- * Rename the existing `Passage` type to `PassageArgs_OLD` (as it
- * accepts `bookId`). Create a new type that will be `PassageArgs`, that
- * will accept `book` instead of `bookId`. For safety, the Passage class
- * will still accept `bookId` as a fallback from `book`.
+ * A passage of the Bible. Only references passages that are wholly
+ * within a single Biblical book.
  */
 export class Passage {
    book: BookId;
 
-   #startChapter?: number;
-   #startVerse?: number;
-   #endChapter?: number;
-   #endVerse?: number;
+   _startChapter?: number;
+   _startVerse?: number;
+   _endChapter?: number;
+   _endVerse?: number;
 
    static RANGE_CHAPTER_SEPARATOR = '–';
    static RANGE_CHAPTER_VERSE_SEPARATOR = ':';
@@ -60,10 +37,14 @@ export class Passage {
       if (Array.isArray(start) && typeof start[0] === 'number') {
          const [startChapter, startVerse] = start;
 
-         this.#startChapter = normaliseChapter(book, startChapter);
+         this._startChapter = Passage.normaliseChapter(book, startChapter);
 
          if (typeof startVerse === 'number') {
-            this.#startVerse = normaliseVerse(book, startChapter, startVerse);
+            this._startVerse = Passage.normaliseVerse(
+               book,
+               startChapter,
+               startVerse,
+            );
          }
 
          /**
@@ -78,10 +59,10 @@ export class Passage {
             const endChapter = end[0];
             let endVerse = end[1];
 
-            this.#endChapter = normaliseChapter(book, endChapter);
+            this._endChapter = Passage.normaliseChapter(book, endChapter);
 
             if (typeof endVerse === 'number') {
-               endVerse = normaliseVerse(book, endChapter, endVerse);
+               endVerse = Passage.normaliseVerse(book, endChapter, endVerse);
 
                const isWithinSingleChapter = this.isWithinSingleChapter;
 
@@ -94,7 +75,7 @@ export class Passage {
                   !isWithinSingleChapter ||
                   (isWithinSingleChapter && endVerse >= this.startVerse)
                ) {
-                  this.#endVerse = endVerse;
+                  this._endVerse = endVerse;
                }
             }
          }
@@ -106,23 +87,23 @@ export class Passage {
     */
 
    get startChapter() {
-      return typeof this.#startChapter === 'number' ? this.#startChapter : 1;
+      return typeof this._startChapter === 'number' ? this._startChapter : 1;
    }
 
    get startVerse() {
-      return typeof this.#startVerse === 'number' ? this.#startVerse : 1;
+      return typeof this._startVerse === 'number' ? this._startVerse : 1;
    }
 
    get endChapter() {
-      if (typeof this.#endChapter === 'number') {
-         return this.#endChapter;
+      if (typeof this._endChapter === 'number') {
+         return this._endChapter;
       }
 
       /**
        * Fall back to the start chapter if it has been defined
        */
-      if (typeof this.#startChapter === 'number') {
-         return this.#startChapter;
+      if (typeof this._startChapter === 'number') {
+         return this._startChapter;
       }
 
       /**
@@ -132,8 +113,8 @@ export class Passage {
    }
 
    get endVerse() {
-      if (typeof this.#endVerse === 'number') {
-         return this.#endVerse;
+      if (typeof this._endVerse === 'number') {
+         return this._endVerse;
       }
 
       /**
@@ -141,10 +122,10 @@ export class Passage {
        * fall back to the start verse
        */
       if (
-         typeof this.#endChapter === 'undefined' &&
-         typeof this.#startVerse === 'number'
+         typeof this._endChapter === 'undefined' &&
+         typeof this._startVerse === 'number'
       ) {
-         return this.#startVerse;
+         return this._startVerse;
       }
 
       /**
@@ -157,6 +138,9 @@ export class Passage {
     * STRINGS
     */
 
+   /**
+    * Returns the full name of the book the passage is within.
+    */
    get bookName() {
       return Bible.book(this.book).name;
    }
@@ -230,6 +214,10 @@ export class Passage {
       }${endChapterString}${endVerseString}`;
    }
 
+   /**
+    * Returns a string representation of the passage with a formatted
+    * reading range. i.e. Matthew 4:1-12
+    */
    get toString() {
       return `${this.bookName} ${this.rangeString}`;
    }
@@ -238,29 +226,56 @@ export class Passage {
     * STATISTICS
     */
 
+   /**
+    * Returns the count of chapters within the passage. A chapter is
+    * included within the count if any verse from it is within the
+    * passage.
+    */
    get chapterCount() {
       return this.endChapter - this.startChapter + 1;
    }
 
+   /**
+    * Returns the word count of the passage. Note, that only whole
+    * chapter words counts are currently supported as I'm hesitant to
+    * load all the data of Bible verse word counts into memory.
+    */
    get wordCount() {
-      // TODO: create function to calculate this
-      return undefined;
+      if (!this.isWholeChapters) {
+         console.warn(
+            'Attempting a word count calculation on a Passage that is not whole chapters. This is not currently supported. The result given will be for the whole chapters of the passage.',
+         );
+      }
+
+      let count = 0;
+
+      for (let ch = this.startChapter; ch <= this.endChapter; ch++) {
+         count += Bible.chapter(this.book, ch).wordCount;
+      }
+
+      return count;
    }
 
    /**
     * BOOLEANS
     */
 
-   get isWholeBook() {
-      return 'TODO';
+   /**
+    * Boolean representing if the passage only includes whole chapters.
+    */
+   get isWholeChapters() {
+      return (
+         this.startVerse === 1 &&
+         this.endVerse === Bible.chapter(this.book, this.endChapter).verseCount
+      );
    }
 
-   get isWholeChapter() {
-      return 'TODO';
-   }
-
+   /**
+    * Boolean representing whether the passage is entirely within the
+    * one chapter.
+    */
    get isWithinSingleChapter() {
-      return this.#startChapter === this.#endChapter;
+      return this._startChapter === this._endChapter;
    }
 
    /**
@@ -276,5 +291,27 @@ export class Passage {
          chapterArray.push(i);
       }
       return chapterArray;
+   }
+
+   /**
+    * STATIC UTILS
+    */
+
+   /**
+    * Ensure the provided `chapter` is within the scope of the provided
+    * `book`.
+    */
+   static normaliseChapter(book: BookId, chapter: number) {
+      const bookChapterCount = Bible.book(book).chapterCount;
+      return Math.min(Math.max(chapter, 1), bookChapterCount);
+   }
+
+   /**
+    * Ensure the provided `verse` is within the scope of the provided
+    * `book` and `chapter`.
+    */
+   static normaliseVerse(book: BookId, chapter: number, verse: number) {
+      const maxVerses = Bible.chapter(book, chapter).verseCount;
+      return verse > maxVerses ? maxVerses : verse;
    }
 }

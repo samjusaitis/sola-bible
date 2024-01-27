@@ -1,6 +1,6 @@
-import { normaliseChapter } from './normaliseChapter';
 import { sortRange } from './internal';
 import { BookId, Range } from '../types';
+import { Passage } from '../Passage';
 
 /**
  * Ensures provided `chapterRange` is within the scope of the provided `bookId`.
@@ -18,7 +18,7 @@ export function normaliseChapterRange(
    const sortedRange = sortRange(chapterRange);
 
    return [
-      normaliseChapter(bookId, sortedRange[0]),
-      normaliseChapter(bookId, sortedRange[1]),
+      Passage.normaliseChapter(bookId, sortedRange[0]),
+      Passage.normaliseChapter(bookId, sortedRange[1]),
    ];
 }
