@@ -12,4 +12,6 @@ export * from './src/utils/isBookJoinable';
 export * from './src/utils/isBookPartOfGroup';
 export * from './src/utils/normaliseChapterRange';
 
+export * from './src/Passage';
+
 export { Bible as default } from './src/Bible';
