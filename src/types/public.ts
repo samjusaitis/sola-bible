@@ -14,6 +14,6 @@ export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;
 
 export type PassageArgs = {
    book: BookId;
-   start: StartChapterAndVerse;
-   end: EndChapterAndVerse;
+   start?: StartChapterAndVerse;
+   end?: EndChapterAndVerse;
 };
