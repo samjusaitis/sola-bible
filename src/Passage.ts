@@ -1,9 +1,11 @@
 import { getChapterRangeWordCount } from './utils/getChapterRangeWordCount';
 import { Bible } from './Bible';
-import { BookId } from './types';
-
-type StartChapterAndVerse = [startChapter: number, startVerse?: number];
-type EndChapterAndVerse = [endChapter: number, endVerse?: number];
+import {
+   BookId,
+   EndChapterAndVerse,
+   PassageArgs,
+   StartChapterAndVerse,
+} from './types';
 
 /**
  * A passage of the Bible. Only references passages that are wholly
@@ -21,24 +23,30 @@ export class Passage {
    static RANGE_CHAPTER_VERSE_SEPARATOR = ':';
 
    constructor(
-      book: BookId,
+      argsOrBook: PassageArgs | BookId,
       start?: StartChapterAndVerse,
       end?: EndChapterAndVerse,
    ) {
+      const hasArgsObject = argsOrBook && typeof argsOrBook === 'object';
+
+      const book = hasArgsObject ? argsOrBook.book : argsOrBook;
+
       if (!Bible.isValidBook(book)) {
          throw new Error('Invalid `book` arg provided to Passage constructor.');
       }
 
       this.book = book;
+      const _start = hasArgsObject ? argsOrBook.start : start;
+      const _end = hasArgsObject ? argsOrBook.end : end;
 
-      if (Array.isArray(start) && typeof start[0] === 'number') {
-         const [startChapter, startVerse] = start;
+      if (Array.isArray(_start) && typeof _start[0] === 'number') {
+         const [startChapter, startVerse] = _start;
 
-         this._startChapter = Passage.normaliseChapter(book, startChapter);
+         this._startChapter = Passage.normaliseChapter(this.book, startChapter);
 
          if (typeof startVerse === 'number') {
             this._startVerse = Passage.normaliseVerse(
-               book,
+               this.book,
                startChapter,
                startVerse,
             );
@@ -49,17 +57,21 @@ export class Passage {
           * equal to the start chapter.
           */
          if (
-            Array.isArray(end) &&
-            typeof end[0] === 'number' &&
-            end[0] >= startChapter
+            Array.isArray(_end) &&
+            typeof _end[0] === 'number' &&
+            _end[0] >= startChapter
          ) {
-            const endChapter = end[0];
-            let endVerse = end[1];
+            const endChapter = _end[0];
+            let endVerse = _end[1];
 
-            this._endChapter = Passage.normaliseChapter(book, endChapter);
+            this._endChapter = Passage.normaliseChapter(this.book, endChapter);
 
             if (typeof endVerse === 'number') {
-               endVerse = Passage.normaliseVerse(book, endChapter, endVerse);
+               endVerse = Passage.normaliseVerse(
+                  this.book,
+                  endChapter,
+                  endVerse,
+               );
 
                const isWithinSingleChapter = this.isWithinSingleChapter;
 

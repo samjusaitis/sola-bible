@@ -1,4 +1,4 @@
-import { ValueOf } from './internal';
+import { EndChapterAndVerse, StartChapterAndVerse, ValueOf } from './internal';
 import { BibleBookNameLength, BibleSubset } from '../enums';
 
 /**
@@ -11,3 +11,9 @@ export type BookGroup = BookId[];
 
 export type BibleSubsetValue = ValueOf<typeof BibleSubset>;
 export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;
+
+export type PassageArgs = {
+   book: BookId;
+   start: StartChapterAndVerse;
+   end: EndChapterAndVerse;
+};

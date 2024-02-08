@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+-  Allow Passage to optionally accept PassageArgs type object.
+
 ## 1.2.3
 
 -  Improved Passage.rangeString() logic.

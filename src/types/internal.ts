@@ -6,6 +6,9 @@ export type Range = [start: number, end: number];
 
 export type BookRange = [bookStart: BookId, bookEnd: BookId];
 
+export type StartChapterAndVerse = [startChapter: number, startVerse?: number];
+export type EndChapterAndVerse = [endChapter: number, endVerse?: number];
+
 export type BibleBookReturn = {
    name: string;
    nameShort: string;
