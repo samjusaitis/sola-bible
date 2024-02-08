@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+
+-  Improved Passage.rangeString() logic.
+
 ## 1.2.2
 
 -  Internals: rename `bookId` variables to `book`.

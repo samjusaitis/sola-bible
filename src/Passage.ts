@@ -17,7 +17,7 @@ export class Passage {
    _endChapter?: number;
    _endVerse?: number;
 
-   static RANGE_CHAPTER_SEPARATOR = '–';
+   static RANGE_SEPARATOR = '–';
    static RANGE_CHAPTER_VERSE_SEPARATOR = ':';
 
    constructor(
@@ -147,68 +147,41 @@ export class Passage {
     * verses i.e. '10-24' or '12:1-19' or '1-3:10' or '2:10-3:1'
     */
    get rangeString() {
-      let showRangeSeparator = true;
-
-      const startChapterString = String(this.startChapter);
-      let startVerseString = String(this.startVerse);
-      let endChapterString = String(this.endChapter);
-      let endVerseString = String(this.endVerse);
-
       const isWithinSingleChapter = this.isWithinSingleChapter;
-      const isWithinSingleChapterAndVersesTheSame =
-         isWithinSingleChapter && this.startVerse === this.endVerse;
-      const isStartVerseFirstOfChapter = this.startVerse === 1;
-      const isEndVerseLastOfChapter =
-         this.endVerse === Bible.chapter(this.book, this.endChapter).verseCount;
 
-      /**
-       * Clear `startVerseString` if not needed, otherwise prepend the
-       * verse separator.
-       */
-      if (
-         isStartVerseFirstOfChapter &&
-         (!isWithinSingleChapter ||
-            (isWithinSingleChapter && isEndVerseLastOfChapter))
-      ) {
-         startVerseString = '';
-      } else {
-         startVerseString = `${Passage.RANGE_CHAPTER_VERSE_SEPARATOR}${startVerseString}`;
+      if (this.isWholeChapters) {
+         if (isWithinSingleChapter) {
+            return `${this.startChapter}`;
+         }
+
+         return `${this.startChapter}${Passage.RANGE_SEPARATOR}${this.endChapter}`;
       }
 
-      /**
-       * Clear `endVerseString` if not needed, otherwise prepend the
-       * verse separator.
-       */
-      if (
-         isWithinSingleChapterAndVersesTheSame ||
-         (isStartVerseFirstOfChapter && isEndVerseLastOfChapter)
-      ) {
-         endVerseString = '';
-      } else if (!isWithinSingleChapter) {
-         endVerseString = `${Passage.RANGE_CHAPTER_VERSE_SEPARATOR}${endVerseString}`;
-      }
-
-      /**
-       * Clear `endChapterString` if not needed
-       */
       if (isWithinSingleChapter) {
-         endChapterString = '';
+         const areVersesTheSame = this.startVerse === this.endVerse;
+
+         if (areVersesTheSame) {
+            return `${this.startChapter}:${this.startVerse}`;
+         }
+
+         return `${this.startChapter}:${this.startVerse}${Passage.RANGE_SEPARATOR}${this.endVerse}`;
       }
 
-      /**
-       * Disable range separator if not needed
-       */
-      if (
-         isWithinSingleChapter &&
-         ((!endChapterString && !endVerseString) ||
-            (isStartVerseFirstOfChapter && isEndVerseLastOfChapter))
-      ) {
-         showRangeSeparator = false;
-      }
+      // Can assume is within separate chapters
 
-      return `${startChapterString}${startVerseString}${
-         showRangeSeparator ? Passage.RANGE_CHAPTER_SEPARATOR : ``
-      }${endChapterString}${endVerseString}`;
+      const showStartVerse = this.startVerse !== 1;
+      const showEndVerse =
+         this.endVerse !== Bible.chapter(this.book, this.endChapter).verseCount;
+
+      return `${this.startChapter}${
+         showStartVerse
+            ? `${Passage.RANGE_CHAPTER_VERSE_SEPARATOR}${this.startVerse}`
+            : ``
+      }${Passage.RANGE_SEPARATOR}${this.endChapter}${
+         showEndVerse
+            ? `${Passage.RANGE_CHAPTER_VERSE_SEPARATOR}${this.endVerse}`
+            : ``
+      }`;
    }
 
    /**
@@ -270,7 +243,7 @@ export class Passage {
     * one chapter.
     */
    get isWithinSingleChapter() {
-      return this._startChapter === this._endChapter;
+      return this.startChapter === this.endChapter;
    }
 
    /**
