@@ -1,6 +1,6 @@
 {
    "name": "sola-bible",
-   "version": "1.2.5",
+   "version": "1.2.6",
    "description": "Bible data",
    "main": "index.ts",
    "repository": "https://github.com/sjusaitis/sola-bible.git",
