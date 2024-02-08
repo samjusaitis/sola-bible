@@ -12,6 +12,8 @@ export type BookGroup = BookId[];
 export type BibleSubsetValue = ValueOf<typeof BibleSubset>;
 export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;
 
+export type ChapterAndVerse = [chapter: number, verse?: number];
+
 export type PassageArgs = {
    book: BookId;
    start?: StartChapterAndVerse;

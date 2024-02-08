@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.6
+
+-  Added ChapterAndVerse type.
+
 ## 1.2.5
 
 -  Fix PassageArgs type.
