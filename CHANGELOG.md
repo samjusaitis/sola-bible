@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.7
+
+-  Added getChapterRange() to Passage.
+
 ## 1.2.6
 
 -  Added ChapterAndVerse type.

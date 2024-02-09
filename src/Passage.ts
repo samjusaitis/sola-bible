@@ -5,6 +5,7 @@ import {
    EndChapterAndVerse,
    PassageArgs,
    StartChapterAndVerse,
+   Range,
 } from './types';
 
 /**
@@ -271,6 +272,13 @@ export class Passage {
          chapterArray.push(i);
       }
       return chapterArray;
+   }
+
+   /**
+    * Returns a new array of all the chapter range of the passage.
+    */
+   getChapterRange(): Range {
+      return [this.startChapter, this.endChapter];
    }
 
    /**
