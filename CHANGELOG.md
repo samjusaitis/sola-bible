@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.8
+
+-  Switch to using private values in Passage.
+-  Add `start`, `end` and `args` getters in Passage.
+
 ## 1.2.7
 
 -  Added getChapterRange() to Passage.

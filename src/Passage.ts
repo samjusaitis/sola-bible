@@ -15,10 +15,10 @@ import {
 export class Passage {
    book: BookId;
 
-   _startChapter?: number;
-   _startVerse?: number;
-   _endChapter?: number;
-   _endVerse?: number;
+   #startChapter?: number;
+   #startVerse?: number;
+   #endChapter?: number;
+   #endVerse?: number;
 
    static RANGE_SEPARATOR = '–';
    static RANGE_CHAPTER_VERSE_SEPARATOR = ':';
@@ -43,10 +43,10 @@ export class Passage {
       if (Array.isArray(_start) && typeof _start[0] === 'number') {
          const [startChapter, startVerse] = _start;
 
-         this._startChapter = Passage.normaliseChapter(this.book, startChapter);
+         this.#startChapter = Passage.normaliseChapter(this.book, startChapter);
 
          if (typeof startVerse === 'number') {
-            this._startVerse = Passage.normaliseVerse(
+            this.#startVerse = Passage.normaliseVerse(
                this.book,
                startChapter,
                startVerse,
@@ -65,7 +65,7 @@ export class Passage {
             const endChapter = _end[0];
             let endVerse = _end[1];
 
-            this._endChapter = Passage.normaliseChapter(this.book, endChapter);
+            this.#endChapter = Passage.normaliseChapter(this.book, endChapter);
 
             if (typeof endVerse === 'number') {
                endVerse = Passage.normaliseVerse(
@@ -85,7 +85,7 @@ export class Passage {
                   !isWithinSingleChapter ||
                   (isWithinSingleChapter && endVerse >= this.startVerse)
                ) {
-                  this._endVerse = endVerse;
+                  this.#endVerse = endVerse;
                }
             }
          }
@@ -96,24 +96,43 @@ export class Passage {
     * VALUES
     */
 
+   /**
+    * Returns args to create a new Passage duplicate this one.
+    */
+   get args() {
+      return {
+         book: this.book,
+         start: this.start,
+         end: this.end,
+      };
+   }
+
+   get start() {
+      return [this.startChapter, this.startVerse];
+   }
+
    get startChapter() {
-      return typeof this._startChapter === 'number' ? this._startChapter : 1;
+      return typeof this.#startChapter === 'number' ? this.#startChapter : 1;
    }
 
    get startVerse() {
-      return typeof this._startVerse === 'number' ? this._startVerse : 1;
+      return typeof this.#startVerse === 'number' ? this.#startVerse : 1;
+   }
+
+   get end() {
+      return [this.endChapter, this.endVerse];
    }
 
    get endChapter() {
-      if (typeof this._endChapter === 'number') {
-         return this._endChapter;
+      if (typeof this.#endChapter === 'number') {
+         return this.#endChapter;
       }
 
       /**
        * Fall back to the start chapter if it has been defined
        */
-      if (typeof this._startChapter === 'number') {
-         return this._startChapter;
+      if (typeof this.#startChapter === 'number') {
+         return this.#startChapter;
       }
 
       /**
@@ -123,8 +142,8 @@ export class Passage {
    }
 
    get endVerse() {
-      if (typeof this._endVerse === 'number') {
-         return this._endVerse;
+      if (typeof this.#endVerse === 'number') {
+         return this.#endVerse;
       }
 
       /**
@@ -132,10 +151,10 @@ export class Passage {
        * fall back to the start verse
        */
       if (
-         typeof this._endChapter === 'undefined' &&
-         typeof this._startVerse === 'number'
+         typeof this.#endChapter === 'undefined' &&
+         typeof this.#startVerse === 'number'
       ) {
-         return this._startVerse;
+         return this.#startVerse;
       }
 
       /**
