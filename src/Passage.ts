@@ -99,7 +99,7 @@ export class Passage {
    /**
     * Returns args to create a new Passage duplicate this one.
     */
-   get args() {
+   get args(): PassageArgs {
       return {
          book: this.book,
          start: this.start,
@@ -108,7 +108,7 @@ export class Passage {
    }
 
    get start() {
-      return [this.startChapter, this.startVerse];
+      return [this.startChapter, this.startVerse] as StartChapterAndVerse;
    }
 
    get startChapter() {
@@ -120,7 +120,7 @@ export class Passage {
    }
 
    get end() {
-      return [this.endChapter, this.endVerse];
+      return [this.endChapter, this.endVerse] as EndChapterAndVerse;
    }
 
    get endChapter() {
