@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.3.1
+
+-  Added "type": "module" to package.json.
+
 ## 1.3.0
 
-- Deprecated default Bible export for named export.
+-  Deprecated default Bible export for named export.
 
 ## 1.2.8
 

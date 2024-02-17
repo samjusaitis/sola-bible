@@ -6,6 +6,7 @@
    "repository": "https://github.com/sjusaitis/sola-bible.git",
    "author": "Sam Jusaitis",
    "license": "MIT",
+   "type": "module",
    "scripts": {
       "lint": "npx eslint --cache --ext .js,.ts,.jsx,.tsx ./ && npx tsc --noemit",
       "release": "yarn lint && yarn version --minor",
