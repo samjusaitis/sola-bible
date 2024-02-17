@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Deprecated default Bible export for named export.
+
 ## 1.2.8
 
 -  Switch to using private values in Passage.
