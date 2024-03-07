@@ -37,8 +37,18 @@ export class Passage {
       }
 
       this.book = book;
-      const _start = hasArgsObject ? argsOrBook.start : start;
-      const _end = hasArgsObject ? argsOrBook.end : end;
+      let _start = start;
+      let _end = end;
+
+      if (hasArgsObject) {
+         if (Array.isArray(argsOrBook.chapterRange)) {
+            _start = [argsOrBook.chapterRange[0]];
+            _end = [argsOrBook.chapterRange[1]];
+         } else {
+            _start = argsOrBook.start;
+            _end = argsOrBook.end;
+         }
+      }
 
       if (Array.isArray(_start) && typeof _start[0] === 'number') {
          const [startChapter, startVerse] = _start;

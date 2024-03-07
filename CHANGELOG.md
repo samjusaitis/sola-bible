@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2
+
+-  Allowed passing a `chapterRange` to the Passage constructor.
+
 ## 1.3.1
 
 -  Added "type": "module" to package.json.

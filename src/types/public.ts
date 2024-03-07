@@ -14,8 +14,24 @@ export type BibleBookNameLengthValue = ValueOf<typeof BibleBookNameLength>;
 
 export type ChapterAndVerse = [chapter: number, verse?: number];
 
+/**
+ * Alternative object style args that can be supplied as the Passage
+ * constructor first parameter.
+ *
+ * The only required value is `book`. Then either a `start` with an optional `end`
+ * can be provided, or alternatively a `chapterRange` can be provided.
+ */
 export type PassageArgs = {
    book: BookId;
-   start?: StartChapterAndVerse;
-   end?: EndChapterAndVerse;
-};
+} & (
+   | {
+        start?: StartChapterAndVerse;
+        end?: EndChapterAndVerse;
+        chapterRange?: never;
+     }
+   | {
+        start?: never;
+        end?: never;
+        chapterRange?: [startChapter: number, endChapter: number];
+     }
+);
