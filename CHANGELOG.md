@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.3
+
+-  Allow null values to be passed to Bible.subset().
+
 ## 1.3.2
 
 -  Allowed passing a `chapterRange` to the Passage constructor.

@@ -73,7 +73,7 @@ export const Bible = {
       return { wordCount, verseCount, year };
    },
 
-   subset(key?: BibleSubsetValue): BibleSubsetReturn {
+   subset(key?: BibleSubsetValue | null): BibleSubsetReturn {
       const subset =
          key && subsets?.[key] ? subsets[key] : subsets[BibleSubset.ALL];
 
