@@ -3,7 +3,7 @@ import { Bible } from './Bible';
 import {
    BookId,
    EndChapterAndVerse,
-   PassageArgs,
+   PassageConstructorArgs,
    StartChapterAndVerse,
    Range,
 } from './types';
@@ -24,7 +24,7 @@ export class Passage {
    static RANGE_CHAPTER_VERSE_SEPARATOR = ':';
 
    constructor(
-      argsOrBook: PassageArgs | BookId,
+      argsOrBook: PassageConstructorArgs | BookId,
       start?: StartChapterAndVerse,
       end?: EndChapterAndVerse,
    ) {
@@ -109,7 +109,7 @@ export class Passage {
    /**
     * Returns args to create a new Passage duplicate this one.
     */
-   get args(): PassageArgs {
+   get args(): PassageConstructorArgs {
       return {
          book: this.book,
          start: this.start,

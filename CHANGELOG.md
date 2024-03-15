@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.4
+
+-  Update PassageArgs to be a simplified representative type.
+
 ## 1.3.3
 
 -  Allow null values to be passed to Bible.subset().
