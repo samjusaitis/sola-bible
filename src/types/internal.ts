@@ -1,10 +1,8 @@
-import { BookId, BibleBookNameLengthValue } from './public';
+import { BookId, BibleBookNameLengthValue, BookRange } from './public';
 
 export type ValueOf<T> = T[keyof T];
 
 export type Range = [start: number, end: number];
-
-export type BookRange = [bookStart: BookId, bookEnd: BookId];
 
 export type StartChapterAndVerse = [startChapter: number, startVerse?: number];
 export type EndChapterAndVerse = [endChapter: number, endVerse?: number];

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.5
+
+-  Make `BookRange` a public type
+
 ## 1.3.4
 
 -  Update PassageArgs to be a simplified representative type.
