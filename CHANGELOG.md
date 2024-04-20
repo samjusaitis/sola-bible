@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.3.6
+
+-  Update getSubsetFromBookRange() to include new subset values.
+
 ## 1.3.5
 
--  Make `BookRange` a public type
+-  Make `BookRange` a public type.
 
 ## 1.3.4
 
