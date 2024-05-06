@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.9
+
+-  Fix passage toString logic
+
 ## 1.3.8
 
 -  Fix `BibleBook` typing

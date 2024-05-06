@@ -212,7 +212,15 @@ export class Passage {
       // Can assume is within separate chapters
 
       const showStartVerse = this.startVerse !== 1;
+
+      /**
+       * Show the end verse if the start verse is shown, as it needs to
+       * be visible to indicate the number directly after the separator
+       * is a chapter. i.e. 1:5-6 does't indicate that the 6 is a
+       * chapter, whereas 1:5-6:22 does.
+       */
       const showEndVerse =
+         showStartVerse ||
          this.endVerse !== Bible.chapter(this.book, this.endChapter).verseCount;
 
       return `${this.startChapter}${
