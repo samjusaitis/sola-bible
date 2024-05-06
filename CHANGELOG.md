@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.7
+
+-  Added `BibleBook` enum export
+
 ## 1.3.6
 
 -  Update getSubsetFromBookRange() to include new subset values.
