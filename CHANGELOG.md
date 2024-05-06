@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.8
+
+-  Fix `BibleBook` typing
+
 ## 1.3.7
 
 -  Added `BibleBook` enum export

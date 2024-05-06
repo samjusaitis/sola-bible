@@ -1,5 +1,3 @@
-import { BookId } from '..';
-
 /**
  * NOTE: BibleSubset values are based on how I am storing subsets in the
  * database.
@@ -24,7 +22,7 @@ export const BibleBookNameLength = Object.freeze({
    ABBREVIATED: 'abbr',
 });
 
-export const BibleBook = Object.freeze<Record<string, BookId>>({
+export const BibleBook = Object.freeze({
    GENESIS: 1,
    EXODUS: 2,
    LEVITICUS: 3,
