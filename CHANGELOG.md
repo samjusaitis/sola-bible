@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.10
+
+-  Add `verseCount` to Bible.book return
+
 ## 1.3.9
 
 -  Fix passage toString logic

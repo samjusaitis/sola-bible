@@ -31,6 +31,7 @@ export const Bible = {
          nameAbbr: bookData.nameAbbr,
          identifier: bookData.identifier,
          chapterCount: bookData.chapterCount,
+         verseCount: bookData.verseCount,
          wordCount: bookData.wordCount,
          testament: book <= this.BOOK_OT_END ? 'OT' : 'NT',
 
@@ -57,7 +58,7 @@ export const Bible = {
       const chapterIndex = chapter - 1;
 
       const wordCount = bookData.chapterWordCounts[chapterIndex];
-      const verseCount = bookData.verseCounts[chapterIndex];
+      const verseCount = bookData.chapterVerseCounts[chapterIndex];
       const year = bookData.chapterYears[chapterIndex];
 
       if (

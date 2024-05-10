@@ -13,6 +13,7 @@ export type BibleBookReturn = {
    nameAbbr: string;
    identifier: string;
    chapterCount: number;
+   verseCount: number;
    wordCount: number;
    testament: string;
    nameByLength: (length: BibleBookNameLengthValue) => string;
