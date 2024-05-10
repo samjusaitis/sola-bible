@@ -78,12 +78,25 @@ export const Bible = {
       const subset =
          key && subsets?.[key] ? subsets[key] : subsets[BibleSubset.ALL];
 
+      const childSubsets: BibleSubsetValue[] = [];
+
+      Object.entries(subsets).forEach(([subsetKey, { bookStart, bookEnd }]) => {
+         if (
+            subsetKey !== key &&
+            bookStart >= subset.bookStart &&
+            bookEnd <= subset.bookEnd
+         ) {
+            childSubsets.push(subsetKey as BibleSubsetValue);
+         }
+      });
+
       return {
          name: subset.name,
          range: [subset.bookStart, subset.bookEnd],
          bookStart: subset.bookStart,
          bookEnd: subset.bookEnd,
          bookCount: subset.bookEnd - subset.bookStart + 1,
+         childSubsets,
 
          bookArray: (trimStart, trimEnd) => {
             let { bookStart, bookEnd } = subset;

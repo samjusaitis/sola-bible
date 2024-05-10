@@ -1,4 +1,9 @@
-import { BookId, BibleBookNameLengthValue, BookRange } from './public';
+import {
+   BookId,
+   BibleBookNameLengthValue,
+   BookRange,
+   BibleSubsetValue,
+} from './public';
 
 export type ValueOf<T> = T[keyof T];
 
@@ -31,6 +36,7 @@ export type BibleSubsetReturn = {
    bookStart: BookId;
    bookEnd: BookId;
    bookCount: number;
+   childSubsets: BibleSubsetValue[];
    bookArray: (trimStart?: BookId, trimEnd?: BookId) => BookId[];
 };
 
