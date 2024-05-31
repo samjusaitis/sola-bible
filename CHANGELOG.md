@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.12
+
+-  Add `bookString` getter to Passage. Marked `bookName` as deprecated,
+   to be removed in a future minor version.
+
 ## 1.3.11
 
 -  Add `childSubsets` to Bible.subset return

@@ -7,6 +7,7 @@ import {
    StartChapterAndVerse,
    Range,
 } from './types';
+import { BibleBook } from '..';
 
 /**
  * A passage of the Bible. Only references passages that are wholly
@@ -179,9 +180,30 @@ export class Passage {
 
    /**
     * Returns the full name of the book the passage is within.
+    *
+    * @deprecated: Prefer `Passage.bookString()`, or if logic requires
+    * the full book name, generate outside this instance (deprecated
+    * since 1.3.12, to be removed from the next minor version).
     */
    get bookName() {
       return Bible.book(this.book).name;
+   }
+
+   /**
+    * Returns the name portion of a passage string. For all books this
+    * is simply the name of the book, except Psalms, where the returned
+    * string will be 'Psalm' if the passage is only within a single
+    * chapter.
+    */
+   get bookString() {
+      const bookName = Bible.book(this.book).name;
+
+      // For singlular Psalm chapters return 'Psalm'
+      if (this.book === BibleBook.PSALMS && this.chapterCount === 1) {
+         return bookName.slice(0, -1);
+      }
+
+      return bookName;
    }
 
    /**
@@ -239,7 +261,7 @@ export class Passage {
     * reading range. i.e. Matthew 4:1-12
     */
    get toString() {
-      return `${this.bookName} ${this.rangeString}`;
+      return `${this.bookString} ${this.rangeString}`;
    }
 
    /**
