@@ -186,6 +186,10 @@ export class Passage {
     * since 1.3.12, to be removed from the next minor version).
     */
    get bookName() {
+      console.warn(
+         'Accessing Passage.bookName is deprecated and will be removed in a future minor version.',
+      );
+
       return Bible.book(this.book).name;
    }
 
