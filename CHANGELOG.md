@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.13
+
+-  Add getVerseRangeWordCount() util function.
+
 ## 1.3.12
 
 -  Add `bookString` getter to Passage. Marked `bookName` as deprecated,
