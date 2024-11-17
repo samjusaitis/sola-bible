@@ -282,9 +282,11 @@ export class Passage {
    }
 
    /**
-    * Returns the word count of the passage. Note, that only whole
-    * chapter words counts are currently supported as I'm hesitant to
-    * load all the data of Bible verse word counts into memory.
+    * Returns the word count of the passage.
+    *
+    * NOTE: only whole chapter words counts are currently supported as
+    * I'm hesitant to load all the data of Bible verse word counts into
+    * memory.
     */
    get wordCount() {
       if (!this.isWholeChapters) {
