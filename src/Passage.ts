@@ -103,9 +103,9 @@ export class Passage {
       }
    }
 
-   /**
+   /* --------------------------------------------------------
     * VALUES
-    */
+    * -------------------------------------------------------- */
 
    /**
     * Returns args to create a new Passage duplicate this one.
@@ -174,9 +174,9 @@ export class Passage {
       return Bible.chapter(this.book, this.endChapter).verseCount;
    }
 
-   /**
+   /* --------------------------------------------------------
     * STRINGS
-    */
+    * -------------------------------------------------------- */
 
    /**
     * Returns the full name of the book the passage is within.
@@ -268,9 +268,9 @@ export class Passage {
       return `${this.bookString} ${this.rangeString}`;
    }
 
-   /**
+   /* --------------------------------------------------------
     * STATISTICS
-    */
+    * -------------------------------------------------------- */
 
    /**
     * Returns the count of chapters within the passage. A chapter is
@@ -302,9 +302,33 @@ export class Passage {
       );
    }
 
-   /**
+   /* --------------------------------------------------------
     * BOOLEANS
+    * -------------------------------------------------------- */
+
+   /**
+    * Boolean representing if the passage includes the whole of its
+    * ending chapter.
     */
+   get isEndChapterWhole() {
+      if (this.isWithinSingleChapter) {
+         return this.isWholeChapters;
+      }
+      return (
+         this.endVerse === Bible.chapter(this.book, this.endChapter).verseCount
+      );
+   }
+
+   /**
+    * Boolean representing if the passage includes the whole of its
+    * starting chapter.
+    */
+   get isStartChapterWhole() {
+      if (this.isWithinSingleChapter) {
+         return this.isWholeChapters;
+      }
+      return this.startVerse === 1;
+   }
 
    /**
     * Boolean representing if the passage only includes whole chapters.
@@ -324,19 +348,61 @@ export class Passage {
       return this.startChapter === this.endChapter;
    }
 
-   /**
-    * UTILS
-    */
+   /* --------------------------------------------------------
+    * UTILITIES
+    * -------------------------------------------------------- */
 
    /**
-    * Returns a new array of all the chapters in the passage.
+    * Returns a new array of all the chapters in the passage. Optionally
+    * exclude chapters that are only partially within the passage by
+    * passing `true`.
+    *
+    * @param excludePartialChapters Whether to exclude any chapters that
+    * are only partially within the passage. Defaults to false.
+    * @returns A new array of chapter numbers
     */
-   getChapterArray(): number[] {
-      const chapterArray = [];
-      for (let i = this.startChapter; i <= this.endChapter; i++) {
-         chapterArray.push(i);
+   getChapterArray(excludePartialChapters = false): number[] {
+      const output: number[] = [];
+
+      const getFirstWholeChapter = () => {
+         if (this.isStartChapterWhole) return this.startChapter;
+         if (this.isWithinSingleChapter) return undefined;
+         return this.startChapter + 1;
+      };
+
+      const start = excludePartialChapters
+         ? getFirstWholeChapter()
+         : this.startChapter;
+
+      /**
+       * Is `start` is undefined, the passage is within a single chapter
+       * that is not whole, so return an empty array.
+       */
+      if (start === undefined) return output;
+
+      const getLastWholeChapter = () => {
+         if (this.isEndChapterWhole) return this.endChapter;
+         if (this.isWithinSingleChapter) return undefined;
+         return this.endChapter - 1;
+      };
+
+      const end = excludePartialChapters
+         ? getLastWholeChapter()
+         : this.endChapter;
+
+      /**
+       * Is `end` is undefined, the passage is within a single chapter
+       * that is not whole, so return an empty array (NOTE: this check
+       * is here for TypeScript as logically `end` will only be
+       * undefined if `start` was also undefined).
+       */
+      if (end === undefined) return output;
+
+      // Fill array and return
+      for (let i = start; i <= end; i++) {
+         output.push(i);
       }
-      return chapterArray;
+      return output;
    }
 
    /**
@@ -346,9 +412,9 @@ export class Passage {
       return [this.startChapter, this.endChapter];
    }
 
-   /**
-    * STATIC UTILS
-    */
+   /* --------------------------------------------------------
+    * STATIC UTILITIES
+    * -------------------------------------------------------- */
 
    /**
     * Ensure the provided `chapter` is within the scope of the provided

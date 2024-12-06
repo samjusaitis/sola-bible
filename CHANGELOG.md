@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.14
+
+-  Add `excludePartialChapters` param to Passage.getChapterArray() function.
+-  Add `isStartChapterWhole` boolean to Passage.
+-  Add `isEndChapterWhole` boolean to Passage.
+
 ## 1.3.13
 
 -  Add getVerseRangeWordCount() util function.
