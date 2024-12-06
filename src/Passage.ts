@@ -352,10 +352,21 @@ export class Passage {
     * UTILITIES
     * -------------------------------------------------------- */
 
+   private getFirstWholeChapter() {
+      if (this.isStartChapterWhole) return this.startChapter;
+      if (this.isWithinSingleChapter) return undefined;
+      return this.startChapter + 1;
+   }
+
+   private getLastWholeChapter() {
+      if (this.isEndChapterWhole) return this.endChapter;
+      if (this.isWithinSingleChapter) return undefined;
+      return this.endChapter - 1;
+   }
+
    /**
-    * Returns a new array of all the chapters in the passage. Optionally
-    * exclude chapters that are only partially within the passage by
-    * passing `true`.
+    * Returns a new array of all the chapters within the passage. Optionally
+    * exclude chapters that are only partial.
     *
     * @param excludePartialChapters Whether to exclude any chapters that
     * are only partially within the passage. Defaults to false.
@@ -364,42 +375,16 @@ export class Passage {
    getChapterArray(excludePartialChapters = false): number[] {
       const output: number[] = [];
 
-      const getFirstWholeChapter = () => {
-         if (this.isStartChapterWhole) return this.startChapter;
-         if (this.isWithinSingleChapter) return undefined;
-         return this.startChapter + 1;
-      };
-
-      const start = excludePartialChapters
-         ? getFirstWholeChapter()
-         : this.startChapter;
+      const range = this.getChapterRange(excludePartialChapters);
 
       /**
-       * Is `start` is undefined, the passage is within a single chapter
-       * that is not whole, so return an empty array.
+       * `range` will be undefined if `excludePartialChapters` is true and
+       * the passage is in a single chapter that is partial
        */
-      if (start === undefined) return output;
-
-      const getLastWholeChapter = () => {
-         if (this.isEndChapterWhole) return this.endChapter;
-         if (this.isWithinSingleChapter) return undefined;
-         return this.endChapter - 1;
-      };
-
-      const end = excludePartialChapters
-         ? getLastWholeChapter()
-         : this.endChapter;
-
-      /**
-       * Is `end` is undefined, the passage is within a single chapter
-       * that is not whole, so return an empty array (NOTE: this check
-       * is here for TypeScript as logically `end` will only be
-       * undefined if `start` was also undefined).
-       */
-      if (end === undefined) return output;
+      if (range === undefined) return output;
 
       // Fill array and return
-      for (let i = start; i <= end; i++) {
+      for (let i = range[0]; i <= range[1]; i++) {
          output.push(i);
       }
       return output;
@@ -408,8 +393,18 @@ export class Passage {
    /**
     * Returns a new array of all the chapter range of the passage.
     */
-   getChapterRange(): Range {
-      return [this.startChapter, this.endChapter];
+   getChapterRange(excludePartialChapters: true): Range | undefined;
+   getChapterRange(excludePartialChapters?: false): Range;
+   getChapterRange(excludePartialChapters?: boolean): Range | undefined;
+   getChapterRange(excludePartialChapters = false): Range | undefined {
+      const start = excludePartialChapters
+         ? this.getFirstWholeChapter()
+         : this.startChapter;
+      const end = excludePartialChapters
+         ? this.getLastWholeChapter()
+         : this.endChapter;
+      if (start === undefined || end === undefined) return undefined;
+      return [start, end];
    }
 
    /* --------------------------------------------------------

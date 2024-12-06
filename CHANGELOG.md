@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.15
+
+-  Update Passage.getChapterArray() to include optional `excludePartialChapters` param.
+
 ## 1.3.14
 
 -  Add `excludePartialChapters` param to Passage.getChapterArray() function.
