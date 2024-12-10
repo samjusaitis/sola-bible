@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.16
+
+-  Add `verseCount` getter to Passage.
+
 ## 1.3.15
 
 -  Update Passage.getChapterArray() to include optional `excludePartialChapters` param.

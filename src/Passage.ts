@@ -282,6 +282,39 @@ export class Passage {
    }
 
    /**
+    * Returns the count of verses within the passage.
+    */
+   get verseCount() {
+      let verseCount = 0;
+
+      if (this.isWithinSingleChapter) {
+         return this.endVerse - this.startVerse + 1;
+      }
+
+      let start = this.startChapter;
+      let end = this.endChapter;
+
+      // Handle partial start chapter
+      if (!this.isStartChapterWhole) {
+         verseCount +=
+            Bible.chapter(this.book, this.startChapter).verseCount -
+            this.startVerse +
+            1;
+         start += 1;
+      }
+      if (!this.isEndChapterWhole) {
+         verseCount += this.endVerse;
+         end -= 1;
+      }
+
+      for (let ch = start; ch <= end; ch++) {
+         verseCount += Bible.chapter(this.book, ch).verseCount;
+      }
+
+      return verseCount;
+   }
+
+   /**
     * Returns the word count of the passage.
     *
     * NOTE: only whole chapter words counts are currently supported as
