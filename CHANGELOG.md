@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.17
+
+-  Add `isStartVerseStartOfChapter` getter to Passage.
+-  Add `isEndVerseEndOfChapter` getter to Passage.
+
 ## 1.3.16
 
 -  Add `verseCount` getter to Passage.

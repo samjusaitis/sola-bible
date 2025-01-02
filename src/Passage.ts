@@ -347,6 +347,14 @@ export class Passage {
       if (this.isWithinSingleChapter) {
          return this.isWholeChapters;
       }
+      return this.isEndVerseEndOfChapter;
+   }
+
+   /**
+    * Boolean representing if the passage ends at the final verse of its
+    * ending chapter.
+    */
+   get isEndVerseEndOfChapter() {
       return (
          this.endVerse === Bible.chapter(this.book, this.endChapter).verseCount
       );
@@ -360,6 +368,14 @@ export class Passage {
       if (this.isWithinSingleChapter) {
          return this.isWholeChapters;
       }
+      return this.isStartVerseStartOfChapter;
+   }
+
+   /**
+    * Boolean representing if the passage begins from the first verse of
+    * its starting chapter.
+    */
+   get isStartVerseStartOfChapter() {
       return this.startVerse === 1;
    }
 
@@ -367,10 +383,7 @@ export class Passage {
     * Boolean representing if the passage only includes whole chapters.
     */
    get isWholeChapters() {
-      return (
-         this.startVerse === 1 &&
-         this.endVerse === Bible.chapter(this.book, this.endChapter).verseCount
-      );
+      return this.isStartVerseStartOfChapter && this.isEndVerseEndOfChapter;
    }
 
    /**
