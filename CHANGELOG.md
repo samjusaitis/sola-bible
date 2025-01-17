@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.18
+
+-  Fix Passage.args type.
+
 ## 1.3.17
 
 -  Add `isStartVerseStartOfChapter` getter to Passage.
