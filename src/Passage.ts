@@ -6,6 +6,7 @@ import {
    PassageConstructorArgs,
    StartChapterAndVerse,
    Range,
+   PassageArgs,
 } from './types';
 import { BibleBook } from '..';
 
@@ -110,7 +111,7 @@ export class Passage {
    /**
     * Returns args to create a new Passage that duplicates this one.
     */
-   get args(): PassageConstructorArgs {
+   get args(): PassageArgs {
       return {
          book: this.book,
          start: this.start,
