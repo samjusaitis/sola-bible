@@ -108,7 +108,7 @@ export class Passage {
     * -------------------------------------------------------- */
 
    /**
-    * Returns args to create a new Passage duplicate this one.
+    * Returns args to create a new Passage that duplicates this one.
     */
    get args(): PassageConstructorArgs {
       return {
