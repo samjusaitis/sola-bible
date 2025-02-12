@@ -96,6 +96,8 @@ export const Bible = {
          bookStart: subset.bookStart,
          bookEnd: subset.bookEnd,
          bookCount: subset.bookEnd - subset.bookStart + 1,
+         chapterCount: subset.chapterCount,
+         wordCount: subset.wordCount,
          childSubsets,
 
          bookArray: (trimStart, trimEnd) => {

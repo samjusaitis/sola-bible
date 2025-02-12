@@ -36,6 +36,8 @@ export type BibleSubsetReturn = {
    bookStart: BookId;
    bookEnd: BookId;
    bookCount: number;
+   chapterCount: number;
+   wordCount: number;
    childSubsets: BibleSubsetValue[];
    bookArray: (trimStart?: BookId, trimEnd?: BookId) => BookId[];
 };
