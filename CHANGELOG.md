@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.20
+
+-  Fix Ezra/Nehemiah bug in `getBookGroupName`;
+
 ## 1.3.19
 
 -  Add `chapterCount` and `wordCount` to subset return
