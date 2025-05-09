@@ -381,6 +381,18 @@ export class Passage {
    }
 
    /**
+    * Boolean representing if the passage is a complete book of the Bible.
+    */
+   get isWholeBook() {
+      return (
+         this.startChapter === 1 &&
+         this.isStartVerseStartOfChapter &&
+         this.endChapter === Bible.book(this.book).chapterCount &&
+         this.isEndVerseEndOfChapter
+      );
+   }
+
+   /**
     * Boolean representing if the passage only includes whole chapters.
     */
    get isWholeChapters() {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.21
+
+-  Add `isWholeBook` getter to Passage.
+
 ## 1.3.20
 
 -  Fix Ezra/Nehemiah bug in `getBookGroupName`;
