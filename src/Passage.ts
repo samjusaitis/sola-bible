@@ -393,7 +393,7 @@ export class Passage {
    }
 
    /**
-    * Boolean representing if the passage only includes whole chapters.
+    * Boolean representing if the passage starts and ends with whole chapters.
     */
    get isWholeChapters() {
       return this.isStartVerseStartOfChapter && this.isEndVerseEndOfChapter;
